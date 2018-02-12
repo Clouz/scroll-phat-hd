@@ -22,7 +22,7 @@ while True:
 
     # Grab the "seconds" component of the current time
     # and convert it to a range from 0.0 to 1.0
-    float_sec = (time.time() % 60) / 59.999
+    float_sec = (time.time() % 60) / 60
 
     # Multiply our range by 15 to spread the current
     # number of seconds over 15 pixels.
@@ -33,18 +33,18 @@ while True:
     # For example this is 28 seconds:
     # [x][x][x][x][x][x][x][ ][ ][ ][ ][ ][ ][ ][ ]
     #  ^ - 0 seconds                59 seconds - ^
-    seconds_progress = float_sec * 15
+    seconds_progress = float_sec * 17
 
     if DISPLAY_BAR:
         # Step through 15 pixels to draw the seconds bar
-        for y in range(15):
+        for y in range(17):
             # For each pixel, we figure out its brightness by
             # seeing how much of "seconds_progress" is left to draw
             # If it's greater than 1 (full brightness) then we just display 1.
             current_pixel = min(seconds_progress, 1)
 
             # Multiply the pixel brightness (0.0 to 1.0) by our global brightness value
-            scrollphathd.set_pixel(y + 1, 6, current_pixel * BRIGHTNESS)
+            scrollphathd.set_pixel(y, 6, current_pixel * BRIGHTNESS)
 
             # Subtract 1 now we've drawn that pixel
             seconds_progress -= 1
