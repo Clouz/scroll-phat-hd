@@ -1,36 +1,28 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.5
 
 import time
 
 import scrollphathd
 from scrollphathd.fonts import font5x5
 
-print("""
-Scroll pHAT HD: Clock
-
-Displays hours and minutes in text,
-plus a seconds progress bar.
-
-Press Ctrl+C to exit!
-
-""")
+print("Clock!\n")
 
 # Display a progress bar for seconds
 # Displays a dot if False
-DISPLAY_BAR = False
+DISPLAY_BAR = True
 
 # Brightness of the seconds bar and text
-BRIGHTNESS = 0.3
+BRIGHTNESS = 0.2
 
 # Uncomment to rotate
-#scrollphathd.rotate(180)
+scrollphathd.rotate(180)
 
 while True:
     scrollphathd.clear()
 
     # Grab the "seconds" component of the current time
     # and convert it to a range from 0.0 to 1.0
-    float_sec = (time.time() % 60) / 59.0
+    float_sec = (time.time() % 60) / 59.999
 
     # Multiply our range by 15 to spread the current
     # number of seconds over 15 pixels.
@@ -64,6 +56,14 @@ while True:
     else:
         # Just display a simple dot
         scrollphathd.set_pixel(int(seconds_progress), 6, BRIGHTNESS)
+
+    #Abbasso la luminosità di notte
+    tempo = int(time.strftime("%H"))
+    if  (tempo >= 0) &  (tempo <= 8):
+        BRIGHTNESS=0.1
+    else:
+        BRIGHTNESS=0.2
+        
 
     # Display the time (HH:MM) in a 5x5 pixel font
     scrollphathd.write_string(
